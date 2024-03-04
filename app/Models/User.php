@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -42,4 +44,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function photo()
+    {
+        return $this->morphOne(Media::class, 'model')->where('collection_name', 'photo');
+    }
+
+    
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function permissions()
+    {
+        return $this->hasManyThrough(Permission::class, Role::class);
+    }
+    
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
