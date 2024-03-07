@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\user\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,3 +29,28 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/', [HomeController::class,'index'])->name('home.index');
+Route::get('/events/search', [HomeController::class, 'search'])->name('events.search');
+Route::resource('events', HomeController::class);
+
+
+/* user routes */
+
+Route::resource('reservations', ReservationController::class);
+
+Route::get('profile',function (){
+    return view('organizer.dashboard');
+});
+
+Route::group(['prefix' => 'organizer', 'as' => 'organizer.', 'namespace' => 'App\Http\Controllers\organizer', 'middleware' => ['auth']], function () {
+    Route::resource('dashboard','DashboardController');
+    Route::resource('events','EventController');   
+    Route::resource('reservation','ReservationController');   
+});
+
+Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Controllers\user', 'middleware' => ['auth', 'user']], function () {
+    Route::resource('events','EventController');   
+    Route::resource('reservation','ReservationController'); 
+    Route::resource('profile','ProfileController');
+});

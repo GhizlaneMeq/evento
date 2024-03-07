@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
