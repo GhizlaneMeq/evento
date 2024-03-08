@@ -36,18 +36,20 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(Request $request)
     {
+        
+       // dd($request);
+
         $organizer = Organizer::where('user_id', auth()->id())->first();
         if (!$organizer) {
             return redirect()->back()->with('error', 'You are not authorized to create events.');
         }
+        //$eventData = $request->validated();
 
-        $eventData = $request->validated();
+        $request['organizer_id'] = $organizer->id;
 
-        $eventData['organizer_id'] = $organizer->id;
-
-        $event = new Event($eventData);
+        $event = new Event($request->all());
 
         if ($request->hasFile('image')) {
             $event->addMediaFromRequest('image')
@@ -56,7 +58,7 @@ class EventController extends Controller
 
         $event->save();
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        return redirect()->route('organizer.events.index')->with('success', 'Event created successfully.');
     }
 
     /**
@@ -70,9 +72,10 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Event $event)
     {
-        //
+        $categories = Category::all();
+        return view('organizer.events.edit', compact('categories','event'));
     }
 
     /**
@@ -86,8 +89,9 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->route('organizer.events.index')->with('success', 'Event deleted successfully.');
     }
 }

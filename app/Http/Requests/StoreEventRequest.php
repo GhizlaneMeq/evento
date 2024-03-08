@@ -23,23 +23,17 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'date' => 'required|date|after_or_equal:today',
-            'location' => 'required|string|max:255',
-            'availableSeats' => 'required|integer|min:0',
-            'takenSeats' => 'nullable|integer|min:0', 
-            'status' => [
-                'required',
-                Rule::in(['draft', 'published', 'cancelled']), 
-            ],
-            'reservationMethod' => [
-                'required',
-                Rule::in([0, 1]), 
-            ],
-            'category_id' => 'required|exists:categories,id',
-            'organizer_id' => 'required|exists:organizers,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'title' => 'required',
+            'description' => 'required',
+            'date' => 'required',
+            'location' => 'required',
+            'availableSeats' => 'required',
+            'takenSeats' => 'nullable', 
+            
+            'reservationMethod' =>'required',
+            'category_id' => 'required',
+            'organizer_id' => 'required',
+            'image' => 'nullable', 
         ];
     }
 }

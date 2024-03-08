@@ -18,9 +18,9 @@ return new class extends Migration
             $table->date('date');
             $table->string('location');
             $table->integer('availableSeats');
-            $table->integer('takenSeats');
+            $table->integer('takenSeats')->default(0);
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
-            $table->integer('reservationMethod');
+            $table->enum('reservationMethod', ['automatic', 'manual'])->default('manual');
             $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); 
             $table->timestamps();

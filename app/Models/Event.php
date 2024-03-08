@@ -26,6 +26,9 @@ class Event extends Model implements HasMedia
     ];
 
 
+    protected $casts = [
+        'date' => 'date', 
+    ];
 
     public function category()
     {

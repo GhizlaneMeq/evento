@@ -24,7 +24,7 @@ class EventFactory extends Factory
             'availableSeats' => $this->faker->numberBetween(1, 100),
             'takenSeats' => $this->faker->numberBetween(0, 50),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'cancelled']),
-            'reservationMethod' => $this->faker->numberBetween(1, 3),
+            'reservationMethod' => $this->faker->randomElement(['manual', 'automatic']),
             'category_id' => function () {
                 return \App\Models\Category::factory()->create()->id;
             },
