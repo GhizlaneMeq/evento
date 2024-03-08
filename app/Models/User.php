@@ -71,4 +71,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(Organizer::class);
     }
+
+
+    public function hasRole($role)
+    {
+        if (is_array($role)) {
+            return $this->roles()->whereIn('name', $role)->exists();
+        }
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
 }

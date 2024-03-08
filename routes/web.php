@@ -54,3 +54,9 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::resource('reservation','ReservationController'); 
     Route::resource('profile','ProfileController');
 });
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::resource('categories','CategoryController');   
+    Route::resource('reservations','ReservationController'); 
+    Route::resource('users','userController');
+});
+
