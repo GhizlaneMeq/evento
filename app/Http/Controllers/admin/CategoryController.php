@@ -29,15 +29,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories|max:255',
-        ]);
-
         $category = Category::create([
             'name' => $request->input('name'),
         ]);
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -47,16 +43,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|unique:categories|max:255',
+            'name' => 'required|string|max:255',
         ]);
 
-        $category->name = $request->input('name');
-        $category->save();
+        $category->update([
+            'name' => $request->name,
+        ]);
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        return response()->json(['message' => 'Category updated successfully'], 200);
     }
 
     /**
@@ -68,6 +65,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully');
     }
 }

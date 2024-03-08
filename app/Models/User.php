@@ -85,4 +85,15 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin');
     }
+
+    public function isOrganizer()
+    {
+        return $this->hasRole('organizer');
+    }
+
+    
+    public function isUser()
+    {
+        return $this->hasRole('user');
+    }
 }
