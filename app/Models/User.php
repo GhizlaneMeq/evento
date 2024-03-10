@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'banned'
     ];
 
     /**
@@ -47,7 +50,7 @@ class User extends Authenticatable
 
     public function photo()
     {
-        return $this->morphOne(Media::class, 'model')->where('collection_name', 'photo');
+        return $this->morphOne(Media::class, 'model')->where('photos', 'photo');
     }
 
     
@@ -96,4 +99,6 @@ class User extends Authenticatable
     {
         return $this->hasRole('user');
     }
+
+   
 }

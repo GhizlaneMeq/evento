@@ -29,6 +29,11 @@ class Event extends Model implements HasMedia
     protected $casts = [
         'date' => 'date', 
     ];
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('event_images')
+            ->singleFile();
+    }
 
     public function category()
     {

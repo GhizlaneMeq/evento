@@ -1,127 +1,113 @@
 @extends('layouts.dash')
 
 @section('content')
-<div class="container p-2 mx-auto sm:p-4 dark:text-gray-100">
-	<h2 class="mb-4 text-2xl font-semibold leadi">Invoices</h2>
-	<div class="overflow-x-auto">
-		<table class="min-w-full text-xs">
-			<colgroup>
-				<col>
-				<col>
-				<col>
-				<col>
-				<col>
-				<col class="w-24">
-			</colgroup>
-			<thead class="dark:bg-gray-700">
-				<tr class="text-left">
-					<th class="p-3">Invoice #</th>
-					<th class="p-3">Client</th>
-					<th class="p-3">Issued</th>
-					<th class="p-3">Due</th>
-					<th class="p-3 text-right">Amount</th>
-					<th class="p-3">Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
-					<td class="p-3">
-						<p>97412378923</p>
-					</td>
-					<td class="p-3">
-						<p>Microsoft Corporation</p>
-					</td>
-					<td class="p-3">
-						<p>14 Jan 2022</p>
-						<p class="dark:text-gray-400">Friday</p>
-					</td>
-					<td class="p-3">
-						<p>01 Feb 2022</p>
-						<p class="dark:text-gray-400">Tuesday</p>
-					</td>
-					<td class="p-3 text-right">
-						<p>$15,792</p>
-					</td>
-					<td class="p-3 text-right">
-						<span class="px-3 py-1 font-semibold rounded-md dark:bg-blue-400 dark:text-gray-900">
-							<span>Pending</span>
-						</span>
-					</td>
-				</tr>
-				<tr class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
-					<td class="p-3">
-						<p>97412378923</p>
-					</td>
-					<td class="p-3">
-						<p>Tesla Inc.</p>
-					</td>
-					<td class="p-3">
-						<p>14 Jan 2022</p>
-						<p class="dark:text-gray-400">Friday</p>
-					</td>
-					<td class="p-3">
-						<p>01 Feb 2022</p>
-						<p class="dark:text-gray-400">Tuesday</p>
-					</td>
-					<td class="p-3 text-right">
-						<p>$275</p>
-					</td>
-					<td class="p-3 text-right">
-						<span class="px-3 py-1 font-semibold rounded-md dark:bg-blue-400 dark:text-gray-900">
-							<span>Pending</span>
-						</span>
-					</td>
-				</tr>
-				<tr class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
-					<td class="p-3">
-						<p>97412378923</p>
-					</td>
-					<td class="p-3">
-						<p>Coca Cola co.</p>
-					</td>
-					<td class="p-3">
-						<p>14 Jan 2022</p>
-						<p class="dark:text-gray-400">Friday</p>
-					</td>
-					<td class="p-3">
-						<p>01 Feb 2022</p>
-						<p class="dark:text-gray-400">Tuesday</p>
-					</td>
-					<td class="p-3 text-right">
-						<p>$8,950,500</p>
-					</td>
-					<td class="p-3 text-right">
-						<span class="px-3 py-1 font-semibold rounded-md dark:bg-blue-400 dark:text-gray-900">
-							<span>Pending</span>
-						</span>
-					</td>
-				</tr>
-				<tr class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
-					<td class="p-3">
-						<p>97412378923</p>
-					</td>
-					<td class="p-3">
-						<p>Nvidia Corporation</p>
-					</td>
-					<td class="p-3">
-						<p>14 Jan 2022</p>
-						<p class="dark:text-gray-400">Friday</p>
-					</td>
-					<td class="p-3">
-						<p>01 Feb 2022</p>
-						<p class="dark:text-gray-400">Tuesday</p>
-					</td>
-					<td class="p-3 text-right">
-						<p>$98,218</p>
-					</td>
-					<td class="p-3 text-right">
-						<span class="px-3 py-1 font-semibold rounded-md dark:bg-blue-400 dark:text-gray-900">
-							<span>Pending</span>
-						</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+<table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
+    <thead class="bg-gray-50">
+        <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+            </th>
+
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Role
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                phone
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+        @foreach ($users as $user)
+        <tr>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                        <img class="h-10 w-10 rounded-full" src="https://i.pravatar.cc/150?img=1" alt="">
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">
+                            {{ $user->name }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            {{ $user->email }}
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                @if($user->banned)
+                <a href="#" onclick="confirmUnban('{{ route('admin.users.unbanUser', $user) }}')" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                    Unban
+                </a>
+                @else
+
+                    <a href="#" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" onclick="confirmBan('{{ route('admin.users.banUser', $user) }}')">Ban</a>
+                @endif
+            </td>
+
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">@forelse ($user->roles as $role)
+                    {{ $role->name }} |
+                    @empty
+                    No roles assigned.
+                    @endforelse</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ $user->phone }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ $user->email }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium">
+                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirmDelete()">
+                    @csrf
+                    @method('Delete')
+                    <button type="submit" class="ml-2 text-red-600 hover:text-red-900">Delete</button>
+                </form>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <form action="{{ route('admin.users.updateRole', $user) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <select name="roles[]" multiple>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}" {{ $user->roles->contains($role->id) ? 'selected' : '' }}>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit">Change Roles</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+{{ $users->links() }}
+
+<script>
+     function confirmDelete() {
+        return confirm('Are you sure you want to delete this user?');
+    }
+     function confirmBan(banUrl) {
+        if (confirm('Are you sure you want to ban this user?')) {
+            window.location.href = banUrl;
+        }
+    }
+
+    function confirmUnban(unbanUrl) {
+        if (confirm('Are you sure you want to unban this user?')) {
+            window.location.href = unbanUrl;
+        }
+    }
+</script>
 @endsection

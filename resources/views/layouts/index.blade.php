@@ -10,6 +10,8 @@
     @vite('resources/css/app.css')
 </head>
 
+{{--
+
 <body>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -90,93 +92,226 @@
                 </ul>
             </div>
         </div>
-    </nav>  
-        <div class="container mx-auto flex flex-wrap py-6">
-            <aside class="w-1/4 bg-gray-100 p-6">
-                <form action="{{ route('events.search') }}" method="get">
-                    @csrf
-                    <div class="mb-6">
-                        <div class="relative">
-                            <input type="text" name="title" placeholder="Rechercher un événement" class="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="absolute right-0 top-0 mt-3 mr-4 h-6 w-6 text-gray-400">
-                                <path fill-rule="evenodd" d="M9 0a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm3.293 5.293a1 1 0 0 0-1.414-1.414L9 8.586l-1.879-1.88a1 1 0 1 0-1.414 1.414L7.586 10 5.707 11.879a1 1 0 1 0 1.414 1.414L9 11.414l1.879 1.88a1 1 0 0 0 1.414-1.414L10.414 10l1.879-1.879z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <button type="submit">search</button>
+    </nav>
+    <div class="container mx-auto flex flex-wrap py-6">
+        <div class="relative h-screen w-full">
+            <img src="{{asset('images/hero.jpeg')}}" alt="Background Image"
+                class="absolute inset-0 w-full h-full object-cover filter blur-sm">
+            <div class="absolute inset-0 bg-black bg-opacity-0"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <div class="flex p-10">
+                    <div class="w-max">
+                        <h1
+                            class="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-5xl text-white font-bold">
+                            Discover, Reserve, Experience: Your Gateway to Unforgettable Events with Evento
+                        </h1>
                     </div>
-                    <div class="mb-6">
-                        <select name="category" class="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 mb-4">
-                            <option value="" disabled selected>Filtrer par catégorie</option>
-                            <!-- Add categories dynamically from backend -->
-                            <option value="music">Musique</option>
-                            <option value="sports">Sports</option>
-                            <option value="arts">Arts</option>
-                            <!-- Add more options as needed -->
-                        </select>
-                        <select name="organizer" class="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 mb-4">
-                            <option value="" disabled selected>Filtrer par organisateur</option>
-                            <!-- Add organizers dynamically from backend -->
-                            <option value="organizer1">Organisateur 1</option>
-                            <option value="organizer2">Organisateur 2</option>
-                            <option value="organizer3">Organisateur 3</option>
-                            <!-- Add more options as needed -->
-                        </select>
-                        <input type="date" name="event_date" placeholder="Date de l'événement" class="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 mb-4">
-                        <input type="text" name="location" placeholder="Lieu de l'événement" class="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500">
-                    </div>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                        Rechercher
-                    </button>
-                </form>
-            </aside>
-            
-            @yield('events')
-            <aside class="w-1/4 flex flex-col items-center px-3">
-                <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                    <p class="text-xl font-semibold pb-5">About Us</p>
-                    <p class="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio
-                        sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
-                    <a href="#"
-                        class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
-                        Get to know us
-                    </a>
                 </div>
+                <p class="text-xl text-white mt-4">This is a sample text</p>
 
-                <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                    <p class="text-xl font-semibold pb-5">Instagram</p>
-                    <div class="grid grid-cols-3 gap-3">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=1">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=2">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=3">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=4">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=5">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=6">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=7">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=8">
-                        <img class="hover:opacity-75"
-                            src="https://source.unsplash.com/collection/1346951/150x150?sig=9">
-                    </div>
-                    <a href="#"
-                        class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-6">
-                        <i class="fab fa-instagram mr-2"></i> Follow @dgrzyb
-                    </a>
-                </div>
-            </aside>
-            
+            </div>
         </div>
+
+        @yield('events')
+
+
+    </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body> --}}
+
+
+<body class="bg-gradient-to-br from-gray-900 to-black">
+    <div class="text-gray-300 container mx-auto p-8 overflow-hidden md:rounded-lg md:p-10 lg:p-12">
+        <div class="flex justify-between">
+            <h1 class="font-serif text-3xl font-medium">Landing</h1>
+            <a href=""
+                class="self-start px-3 py-2 leading-none text-gray-200 border border-gray-800 rounded-lg focus:outline-none focus:shadow-outline bg-gradient-to-b hover:from-indigo-500 from-gray-900 to-black">
+                Get this template
+            </a>
+        </div>
+
+        <div class="h-32 md:h-40"></div>
+
+
+        <div class=" inset-0 flex flex-col">
+            <div class="flex">
+
+                <p
+                    class=" animate-typing overflow-hidden  whitespace-nowrap border-r-4 border-r-white pr-5 text-5xl text-white font-bold font-sans ">
+                    Experience the Future of Event Management with Evento</p>
+
+            </div>
+
+        </div>
+        <div class="h-10"></div>
+        <p class="max-w-2xl font-serif text-xl text-gray-400 md:text-2xl">
+            Evento: Where Events Begin, Reservations Made Easy. Experience Unforgettable Moments with Us."
+        </p>
+
+
+        <div class="h-32 md:h-40"></div>
+
+        <div class="grid gap-8 md:grid-cols-2">
+            <div class="flex flex-col justify-center">
+                <p
+                    class="self-start inline font-sans text-xl font-medium text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-green-600">
+                    Our Services: Streamlining Event Management for You
+                </p>
+                <h2 class="text-4xl font-bold">Effortless Solutions for Every Step of Your Event Journe</h2>
+                <div class="h-6"></div>
+                <p class="font-serif text-xl text-gray-400 md:pr-10">
+                    At Evento, we offer a comprehensive range of services tailored to simplify
+                    every aspect of event management. From seamless reservation systems
+                    to detailed event analytics, we're here to ensure your events are nothing short of spectacular
+                </p>
+                <div class="h-8"></div>
+                <div class="grid grid-cols-2 gap-4 pt-8 border-t border-gray-800">
+                    <div>
+                        <p class="font-semibold text-gray-400">Seamless Reservation System</p>
+                        <div class="h-4"></div>
+                        <p class="font-serif text-gray-400">
+                            With our Seamless Reservation System,
+                            Evento makes booking your spot at any event a breeze.
+                            Say goodbye to long queues and complicated booking processes
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-400">Comprehensive Event Analytics</p>
+                        <div class="h-4"></div>
+                        <p class="font-serif text-gray-400">
+                            Evento's Comprehensive Event Analytics service provides
+                            valuable insights into the performance and success of your events.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="-mr-24 rounded-lg md:rounded-l-full bg-gradient-to-br from-gray-900 to-black h-96"></div>
+            </div>
+        </div>
+
+        <div class="h-32 md:h-40"></div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+            @yield('events')
+        </div>
+
+        <div class="h-40"></div>
+
+        <div class="grid gap-8 md:grid-cols-3">
+            <div class="flex flex-col justify-center md:col-span-2">
+                <p
+                    class="self-start inline font-sans text-xl font-medium text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-600">
+                    Event Planning Made Effortless
+                </p>
+                <h2 class="text-4xl font-bold">Discover the Ease of Seamless Event Management with Evento</h2>
+                <div class="h-6"></div>
+                <p class="font-serif text-xl text-gray-400 md:pr-10">
+                    Welcome to Evento, your one-stop solution for effortless event planning.
+                    Whether you're organizing a corporate conference, a music festival,
+                    or a community workshop, Evento streamlines every step of the process
+                </p>
+                <div class="h-8"></div>
+                <div class="grid gap-6 pt-8 border-t border-gray-800 lg:grid-cols-3">
+                    <details>
+                        <summary class="font-semibold text-gray-400">How do I create an account on Evento?</summary>
+                        <div class="h-4"></div>
+                        <p class="font-serif text-gray-400">
+                            Creating an account on Evento is simple! Just click on the "Sign Up"
+                            button at the top right corner of the homepage. Fill in your name,
+                            email address, and choose a secure password. Once done,
+                            you're ready to explore and book events hassle-fre
+                        </p>
+                    </details>
+                    <details>
+                        <summary class="font-semibold text-gray-400">Can I cancel my event reservation?</summary>
+                        <div class="h-4"></div>
+                        <p class="font-serif text-gray-400">
+                            Yes, you can cancel your event reservation through your Evento account.
+                            Simply navigate to your bookings, locate the event you wish to cancel,
+                            and follow the cancellation prompts. Please note that cancellation policies may vary
+                            depending on the event organizer, so be sure to check the terms and conditions before
+                            canceling.
+                        </p>
+                    </details>
+                    <details>
+                        <summary class="font-semibold text-gray-400">What should I do if I encounter an issue during the
+                            event?</summary>
+                        <div class="h-4"></div>
+                        <p class="font-serif text-gray-400">
+                            If you encounter any issues or require assistance
+                            while attending an event, Evento is here to help. Simply reach out to
+                            our dedicated support team by clicking on the "Support"
+                            tab located on the Evento homepage. Our team is available
+                            around the clock to address any concerns or technical difficulties you may
+                            encounter. Your satisfaction and seamless event experience are our top priorities.
+                        </p>
+                    </details>
+                </div>
+            </div>
+            <div>
+                <div class="-mr-24 rounded-lg md:rounded-l-full bg-gradient-to-br from-gray-900 to-black h-96"></div>
+            </div>
+        </div>
+
+        <div class="h-10 md:h-40"></div>
+
+        <div class="grid gap-4 md:grid-cols-4">
+            <ul class="space-y-1 text-gray-400">
+                <li class="pb-4 font-serif text-gray-400">Social networks</li>
+                <li>
+                    <a href="https://twitter.com/victormustar" class="hover:underline">Twitter</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Linkedin</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Facebook</a>
+                </li>
+            </ul>
+            <ul class="space-y-1 text-gray-400">
+                <li class="pb-4 font-serif text-gray-400">Locations</li>
+                <li>
+                    <a href="#" class="hover:underline">Paris</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">New York</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">London</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Singapour</a>
+                </li>
+            </ul>
+            <ul class="space-y-1 text-gray-400">
+                <li class="pb-4 font-serif text-gray-400">Company</li>
+                <li>
+                    <a href="#" class="hover:underline">The team</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">About us</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Our vision</a>
+                </li>
+                <li>
+                    <a href="#" class="hover:underline">Join us</a>
+                </li>
+            </ul>
+            <ul class="space-y-1 text-gray-400">
+                <li class="pb-4 font-serif text-gray-400">Join</li>
+                <li>
+                    <a href=""
+                        class="self-start px-3 py-2 leading-none text-gray-200 border border-gray-800 rounded-lg focus:outline-none focus:shadow-outline bg-gradient-to-b hover:from-indigo-500 from-gray-900 to-black">
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="h-12"></div>
+    </div>
 </body>
 
 </html>
-
-
-

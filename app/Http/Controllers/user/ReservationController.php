@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -36,11 +37,24 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Reservation::create($request->all());
+{
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        // Define validation rules for reservation creation
+    ]);
 
-        return response()->json(['success' => true]); 
-    }
+    // Create a new reservation using validated data
+    $reservation = Reservation::create($validatedData);
+
+    // Check if reservation creation was successful
+        // Generate PDF ticket
+        $pdf = $this->generatePdfTicket($reservation);
+
+        $pdf = Pdf::loadView('ticketPdf',['reservation'=>$reservation]);
+        return $pdf->download('invoice.pdf');
+  
+}
+
 
     /**
      * Display the specified resource.

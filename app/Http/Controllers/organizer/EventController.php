@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\Organizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -38,25 +39,18 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        
-       // dd($request);
-
         $organizer = Organizer::where('user_id', auth()->id())->first();
         if (!$organizer) {
             return redirect()->back()->with('error', 'You are not authorized to create events.');
         }
-        //$eventData = $request->validated();
 
-        $request['organizer_id'] = $organizer->id;
-
-        $event = new Event($request->all());
+        $request->merge(['organizer_id' => $organizer->id]);
+        $event = Event::create($request->all());
 
         if ($request->hasFile('image')) {
-            $event->addMediaFromRequest('image')
-                 ->toMediaCollection('event_images');
+            $imagePath = Storage::disk('event_images')->putFile('', $request->file('image'));
+            $event->addMedia(storage_path('\app\\'.$imagePath))->toMediaCollection('event_images');
         }
-
-        $event->save();
 
         return redirect()->route('organizer.events.index')->with('success', 'Event created successfully.');
     }
@@ -64,9 +58,10 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
-        //
+        $event->load('reservations.user');
+        return view('organizer.events.show', compact('event'));
     }
 
     /**
@@ -75,15 +70,16 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $categories = Category::all();
-        return view('organizer.events.edit', compact('categories','event'));
+        return view('organizer.events.edit', compact('categories', 'event'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreEventRequest $request, Event $event)
     {
-        //
+        $event->update($request->all());
+        return redirect()->route('organizer.events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
