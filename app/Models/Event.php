@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Event extends Model implements HasMedia
+
+class Event extends Model 
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title', 
         'description', 
         'date', 
+        'image', 
         'location', 
         'availableSeats', 
         'takenSeats', 
@@ -29,11 +29,7 @@ class Event extends Model implements HasMedia
     protected $casts = [
         'date' => 'date', 
     ];
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('event_images')
-            ->singleFile();
-    }
+
 
     public function category()
     {

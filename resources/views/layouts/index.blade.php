@@ -192,6 +192,8 @@
         </div>
 
         <div class="h-32 md:h-40"></div>
+        @yield('search')
+        <div class="h-32 md:h-40"></div>
 
         <div class="grid gap-4 md:grid-cols-3">
             @yield('events')
@@ -312,6 +314,7 @@
         </div>
         <div class="h-12"></div>
     </div>
+    @yield('modal')
 </body>
 
 </html>

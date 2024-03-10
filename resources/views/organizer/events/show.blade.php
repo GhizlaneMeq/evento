@@ -11,11 +11,10 @@
                     <div class="h-full">
                         <article class="h-full">
                             <div class="h-full">
-                                @if($event->getFirstMedia('event_images'))
-                                    <img class="h-full object-cover" src="{{ $event->getFirstMedia('event_images')->getUrl() }}" alt="{{ $event->title }}" />
+                                @if($event->image)
+                                    <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->image }}">
                                 @else
-                                    <!-- Placeholder image if no image is available -->
-                                    <img class="h-full object-cover" src="{{ asset('placeholder-image.jpg') }}" alt="{{ $event->title }}" />
+                                    <p>No image available</p>
                                 @endif
                             </div>
                         </article>
@@ -29,39 +28,39 @@
                         <p class="mt-4">Location: {{ $event->location }}</p>
                         <p class="mt-4">Available Seats: {{ $event->availableSeats }}</p>
                         <h2>Reservations</h2>
-        @if ($event->reservations->isEmpty())
-            <p>No reservations for this event yet.</p>
-        @else
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($event->reservations as $reservation)
-                        <tr>
-                            <td>{{ $reservation->user->name }}</td>
-                            <td>{{ $reservation->status }}</td>
-                            <td>
-                                @if ($reservation->status === 'pending')
-                                    <form method="POST" action="{{ route('reservations.accept', $reservation->id) }}" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success">Accept</button>
-                                    </form>
-                                    <form method="POST" action="{{ route('reservations.refuse', $reservation->id) }}" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Refuse</button>
-                                    </form>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
+                        @if ($event->reservations->isEmpty())
+                            <p>No reservations for this event yet.</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($event->reservations as $reservation)
+                                        <tr>
+                                            <td>{{ $reservation->user->name }}</td>
+                                            <td>{{ $reservation->status }}</td>
+                                            <td>
+                                                @if ($reservation->status === 'pending')
+                                                    <form method="POST" action="{{ route('reservations.accept', $reservation->id) }}" style="display: inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-success">Accept</button>
+                                                    </form>
+                                                    <form method="POST" action="{{ route('reservations.refuse', $reservation->id) }}" style="display: inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger">Refuse</button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                         <p><a class="mt-4 button button--secondary" href="https://inviqa.com/cxcon-experience-transformation">Explore this event</a></p>
                     </div>
                 </div>

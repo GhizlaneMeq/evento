@@ -9,11 +9,8 @@ class Organizer extends Model
 {
     use HasFactory;
 
-    public function organization()
-    {
-        return $this->belongsTo(Organization::class);
-    }
-
+    protected $fillable = ['organization_name'];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

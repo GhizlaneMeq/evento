@@ -18,12 +18,11 @@ class OrganizerFactory extends Factory
     public function definition(): array
     {
         return [
+            'organization_name' => $this->faker->company,
             'user_id' => function () {
                 return \App\Models\User::factory()->create()->id;
             },
-            'organization_id' => function () {
-                return Organization::factory()->create()->id;
-            },
+            
         ];
     }
 }

@@ -15,9 +15,9 @@ class HomeController extends Controller
     public function index()
     {
         $categories=Category::all();
-        $events = Event::with('organizer.organization', 'category')
+        $events = Event::with('organizer', 'category')
             ->where('status', 'confirmed')
-            ->paginate(10);
+            ->paginate(6);
 
         return view('welcome', compact('events', 'categories'));
     }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('profile')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->boolean('banned')->default(false);
