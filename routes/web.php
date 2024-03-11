@@ -50,6 +50,7 @@ Route::group(['prefix' => 'organizer', 'as' => 'organizer.', 'namespace' => 'App
     Route::resource('dashboard','DashboardController');
     Route::resource('events','EventController');   
     Route::resource('reservation','ReservationController');   
+    Route::resource('statistics','StatisticController');   
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Controllers\user', 'middleware' => ['auth', 'user']], function () {

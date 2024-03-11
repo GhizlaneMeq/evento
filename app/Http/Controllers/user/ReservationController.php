@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -18,8 +19,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
-        return view('reservations.index', compact('reservations'));
+        $user = Auth::user();
+        $reservations = $user->reservations;
+        return view('user.reservations', compact('reservations'));
     }
 
     /**

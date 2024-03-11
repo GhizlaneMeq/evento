@@ -23,40 +23,7 @@ class HomeController extends Controller
     }
 
 
-   /*  public function search(Request $request)
-{
-    // Retrieve search criteria from the request
-    $title = $request->input('title');
-    $category = $request->input('category');
-    $organizer = $request->input('organizer');
-    $eventDate = $request->input('event_date');
-    $location = $request->input('location');
-
-    // Perform database query based on search criteria
-    $events = Event::query()
-        ->when($title, function ($query) use ($title) {
-            $query->where('title', 'like', '%' . $title . '%');
-        })
-        ->when($category, function ($query) use ($category) {
-            $query->where('category_id', $category);
-        })
-        ->when($organizer, function ($query) use ($organizer) {
-            $query->whereHas('organizer', function ($query) use ($organizer) {
-                $query->where('name', 'like', '%' . $organizer . '%');
-            });
-        })
-        ->when($eventDate, function ($query) use ($eventDate) {
-            $query->whereDate('date', $eventDate);
-        })
-        ->when($location, function ($query) use ($location) {
-            $query->where('location', 'like', '%' . $location . '%');
-        })
-        ->get();
-
-    // Pass the search results to the view
-    return response()->json(['events' => $events]);
-}
- */
+   
 public function search(Request $request)
 {
     $categories = Category::all();
@@ -64,7 +31,7 @@ public function search(Request $request)
     $searchQuery = $request->input('search_query');
     $dateFilter = $request->input('date_filter');
 
-    // Query events
+
     $eventsQuery = Event::query()
         ->when($category, function ($query) use ($category) {
             $query->where('category_id', $category);
@@ -82,10 +49,8 @@ public function search(Request $request)
             $query->whereDate('date', $dateFilter);
         });
 
-    // Paginate the results
     $events = $eventsQuery->paginate(10);
 
-    // Pass $events and $categories to the view
     return view('welcome', compact('events', 'categories'));
 }
 
