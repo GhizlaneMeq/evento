@@ -15,7 +15,7 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && !$request->user()->isOrganizer()) {
+        if ($request->user() && $request->user()->isUser() ) {
             return $next($request);
         }
 

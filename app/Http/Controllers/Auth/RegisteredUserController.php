@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organizer;
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -34,6 +36,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:user,organizer'], 
+            'organization_name' => ['required_if:role,organizer'] 
         ]);
 
         $user = User::create([
@@ -43,9 +47,34 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        //dd($user->id);
+
+        if ($request->role === 'organizer') {
+            Organizer::create([
+                'user_id' => $user->id,
+                'organization_name' => $request->organization_name
+            ]);
+        }
+        $user->roles()->attach([
+            Role::where('name', 'user')->first()->id,
+            Role::where('name', 'organizer')->first()->id,
+        ]);
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        switch ($user) {
+            case $user->isAdmin():
+                return redirect()->route('admin.dashboard.index');
+                break;
+            case $user->isOrganizer():
+                return redirect()->route('organizer.dashboard.index');
+                break;
+            case $user->isUser():
+                return redirect()->route('user.events.index');
+                break;
+            default:
+                return redirect(RouteServiceProvider::HOME);
+                break;
+        }
     }
 }

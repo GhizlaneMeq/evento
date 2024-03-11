@@ -9,7 +9,7 @@ class Organizer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['organization_name'];
+    protected $fillable = ['organization_name','user_id'];
     
     public function user()
     {

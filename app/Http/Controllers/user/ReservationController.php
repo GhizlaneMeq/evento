@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Reservation;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class ReservationController extends Controller
 {
@@ -37,23 +39,37 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    // Validate the incoming request data
-    $validatedData = $request->validate([
-        // Define validation rules for reservation creation
-    ]);
+    {
+        $request->validate([
+            'event_id' => 'required|exists:events,id',
+        ]);
 
-    // Create a new reservation using validated data
-    $reservation = Reservation::create($validatedData);
+        $event = Event::findOrFail($request->event_id);
 
-    // Check if reservation creation was successful
-        // Generate PDF ticket
-        $pdf = $this->generatePdfTicket($reservation);
+        if ($event->reservation_method === 'manual') {
+            $reservation = Reservation::create([
+                'event_id' => $event->id,
+                'user_id' => auth()->id(),
+                'status' => 'pending',
+            ]);
+            return response()->json(['success' => true, 'message' => 'Reservation pending organizer confirmation']);
+        }
 
-        $pdf = Pdf::loadView('ticketPdf',['reservation'=>$reservation]);
-        return $pdf->download('invoice.pdf');
-  
-}
+        $reservation = Reservation::create([
+            'event_id' => $event->id,
+            'user_id' => auth()->id(),
+            'status' => 'confirmed', 
+        ]);
+        
+        $event->takenSeats++;
+        $event->save();
+
+        $pdf = FacadePdf::loadView('ticketPdf', compact('reservation'));
+        $pdf->save(storage_path('ticket' . $reservation->id . '.pdf'));
+
+        return response()->download(storage_path('ticket' . $reservation->id . '.pdf'))->deleteFileAfterSend(true);
+    }
+
 
 
     /**
